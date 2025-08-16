@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Work & Earn Platform</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #8e2de2, #4a00e0);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 400px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            transition: all 0.5s ease;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .welcome-screen {
+            display: block;
+        }
+        
+        .auth-screen {
+            display: none;
+        }
+        
+        .dashboard, .task-screen, .withdraw-screen {
+            display: none;
+        }
+        
+        h1 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: #fff;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        
+        h2 {
+            font-size: 22px;
+            margin-bottom: 20px;
+            color: #fff;
+        }
+        
+        h3 {
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: #fff;
+        }
+        
+        .money-icon {
+            font-size: 50px;
+            margin-bottom: 20px;
+            animation: glow 2s infinite alternate;
+        }
+        
+        @keyframes glow {
+            from {
+                text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #ffd700, 0 0 20px #ffd700;
+            }
+            to {
+                text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #ffd700, 0 0 40px #ffd700;
+            }
+        }
+        
+        .btn-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+        
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        .btn-primary {
+            background: #9c27b0;
+            color: white;
+        }
+        
+        .btn-secondary {
+            background: #673ab7;
+            color: white;
+        }
+        
+        .btn-success {
+            background: #4CAF50;
+            color: white;
+        }
+        
+        .btn-danger {
+            background: #f44336;
+            color: white;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        
+        input {
+            width: 100%;
+            padding: 12px 15px;
+            border: none;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.2);
+            color: #fff;
+            font-size: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .switch-form {
+            margin-top: 20px;
+            font-size: 14px;
+        }
+        
+        .switch-form a {
+            color: #ffeb3b;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        .dashboard-options {
+            margin-top: 30px;
+        }
+        
+        .option-card {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .option-card:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .option-icon {
+            font-size: 24px;
+            margin-right: 15px;
+        }
+        
+        .user-welcome {
+            margin-bottom: 30px;
+        }
+        
+        .emoji {
+            font-size: 24px;
+            margin: 0 5px;
+        }
+        
+        .user-stats {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 15px;
+            padding: 15px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .stat-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        
+        .task-description {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .task-link {
+            color: #ffeb3b;
+            text-decoration: none;
+            font-weight: 600;
+            word-break: break-all;
+        }
+        
+        .screenshot-upload {
+            margin-top: 20px;
+        }
+        
+        .balance {
+            font-size: 24px;
+            font-weight: 700;
+            margin: 15px 0;
+            color: #ffeb3b;
+        }
+        
+        .back-btn {
+            margin-top: 20px;
+        }
+        
+        .error-message {
+            color: #ff5252;
+            margin-top: 5px;
+            font-size: 14px;
+            display: none;
+        }
+        
+        .success-message {
+            color: #4CAF50;
+            margin-top: 10px;
+            font-size: 14px;
+            display: none;
+        }
+        
+        .loading {
+            display: none;
+            margin-top: 15px;
+        }
+        
+        .loading-spinner {
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top: 4px solid #fff;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Welcome Screen -->
+    <div class="container welcome-screen" id="welcomeScreen">
+        <div class="money-icon">💰</div>
+        <h1>Welcome to Our Work & Earn Platform! <span class="emoji">👋</span></h1>
+        <p>Start earning today by completing simple tasks <span class="emoji">💼</span> <span class="emoji">💰</span></p>
+        <div class="btn-container">
+            <button class="btn btn-primary" onclick="showAuth('register')">Register <span class="emoji">📝</span></button>
+            <button class="btn btn-secondary" onclick="showAuth('login')">Login <span class="emoji">🔑</span></button>
+        </div>
+    </div>
+    
+    <!-- Auth Screen -->
+    <div class="container auth-screen" id="authScreen">
+        <!-- Register Form -->
+        <div id="registerForm">
+            <h2>Create Your Account <span class="emoji">🎉</span></h2>
+            <div class="form-group">
+                <label for="regName">Full Name <span class="emoji">👤</span></label>
+                <input type="text" id="regName" placeholder="Enter your name">
+            </div>
+            <div class="form-group">
+                <label for="regNumber">Indian Mobile Number <span class="emoji">📱</span></label>
+                <input type="tel" id="regNumber" placeholder="Enter 10-digit mobile number">
+                <div class="error-message" id="regNumberError">This number is already registered!</div>
+            </div>
+            <div class="form-group">
+                <label for="regPassword">Password <span class="emoji">🔒</span></label>
+                <input type="password" id="regPassword" placeholder="Create a password (min 6 chars)">
+            </div>
+            <button class="btn btn-primary" onclick="register()">Register Now <span class="emoji">🚀</span></button>
+            <div class="switch-form">
+                Already have an account? <a href="#" onclick="showAuth('login')">Login here <span class="emoji">👉</span></a>
+            </div>
+        </div>
+        
+        <!-- Login Form -->
+        <div id="loginForm" style="display: none;">
+            <h2>Welcome Back! <span class="emoji">😊</span></h2>
+            <div class="form-group">
+                <label for="loginNumber">Mobile Number <span class="emoji">📱</span></label>
+                <input type="tel" id="loginNumber" placeholder="Enter your mobile number">
+                <div class="error-message" id="loginError">Invalid number or password!</div>
+            </div>
+            <div class="form-group">
+                <label for="loginPassword">Password <span class="emoji">🔒</span></label>
+                <input type="password" id="loginPassword" placeholder="Enter your password">
+            </div>
+            <button class="btn btn-secondary" onclick="login()">Login <span class="emoji">🔑</span></button>
+            <div class="switch-form">
+                Don't have an account? <a href="#" onclick="showAuth('register')">Register here <span class="emoji">👉</span></a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dashboard -->
+    <div class="container dashboard" id="dashboard">
+        <div class="user-welcome">
+            <h1 id="welcomeUser">Welcome, User! <span class="emoji">👋</span></h1>
+            <div class="money-icon">💰</div>
+            <div class="balance">Balance: ₹<span id="userBalance">0</span></div>
+        </div>
+        
+        <div class="user-stats">
+            <h3>Your Stats <span class="emoji">📊</span></h3>
+            <div class="stat-item">
+                <span>Tasks Completed: <span class="emoji">✅</span></span>
+                <span id="completedTasks">0</span>
+            </div>
+            <div class="stat-item">
+                <span>Total Earnings: <span class="emoji">💰</span></span>
+                <span>₹<span id="totalEarnings">0</span></span>
+            </div>
+        </div>
+        
+        <div class="dashboard-options">
+            <div class="option-card" onclick="showTaskScreen()">
+                <div class="option-icon">💼</div>
+                <div>
+                    <h3>Complete Tasks <span class="emoji">✨</span></h3>
+                    <p>Earn money by completing simple tasks</p>
+                </div>
+            </div>
+            
+            <div class="option-card" onclick="showWithdrawScreen()">
+                <div class="option-icon">💳</div>
+                <div>
+                    <h3>Withdraw Money <span class="emoji">🏦</span></h3>
+                    <p>Transfer your earnings to your bank</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Task Screen -->
+    <div class="container task-screen" id="taskScreen">
+        <h2>Complete Task & Earn <span class="emoji">💰</span></h2>
+        
+        <div class="task-description">
+            <h3>Task 1: Join Telegram Channel <span class="emoji">📢</span></h3>
+            <p>Join our Telegram channel by clicking the link below and send screenshot as proof to earn ₹20!</p>
+            <p><a href="https://t.me/ZXXYYUY" class="task-link" target="_blank">https://t.me/ZXXYYUY</a> <span class="emoji">🔗</span></p>
+        </div>
+        
+        <div class="form-group">
+            <label for="screenshot">Upload Screenshot <span class="emoji">📸</span></label>
+            <input type="file" id="screenshot" accept="image/*">
+        </div>
+        
+        <button class="btn btn-success" onclick="submitTask()">Submit Task <span class="emoji">🚀</span></button>
+        <div class="success-message" id="taskSuccess">Task submitted successfully! ₹20 added to your balance.</div>
+        
+        <button class="btn btn-danger back-btn" onclick="backToDashboard()">Back to Dashboard <span class="emoji">👈</span></button>
+    </div>
+    
+    <!-- Withdraw Screen -->
+    <div class="container withdraw-screen" id="withdrawScreen">
+        <h2>Withdraw Your Earnings <span class="emoji">💰</span></h2>
+        
+        <div class="balance">Current Balance: ₹<span id="withdrawBalance">0</span></div>
+        
+        <div class="form-group">
+            <label for="upiId">Enter UPI ID <span class="emoji">🏦</span></label>
+            <input type="text" id="upiId" placeholder="e.g. yourname@upi">
+        </div>
+        
+        <div class="form-group">
+            <label for="withdrawAmount">Amount (Minimum ₹30) <span class="emoji">💸</span></label>
+            <input type="number" id="withdrawAmount" placeholder="Enter amount" min="30">
+        </div>
+        
+        <button class="btn btn-primary" onclick="withdrawMoney()">Withdraw Now <span class="emoji">💳</span></button>
+        <div class="error-message" id="withdrawError">Minimum withdrawal amount is ₹30!</div>
+        <div class="success-message" id="withdrawSuccess">Withdrawal request submitted successfully!</div>
+        
+        <div class="loading" id="withdrawLoading">
+            <div class="loading-spinner"></div>
+            <p>Sending request to Telegram bot...</p>
+        </div>
+        
+        <button class="btn btn-danger back-btn" onclick="backToDashboard()">Back to Dashboard <span class="emoji">👈</span></button>
+    </div>
+    
+    <script>
+        // User data storage
+        let users = JSON.parse(localStorage.getItem('users')) || [];
+        let currentUser = null;
+        
+        // Telegram bot details
+        const BOT_TOKEN = '8406910719:AAGLd7SJni7QGVApZL8NvI03N-dZp5OaoN0';
+        const CHAT_ID = '6336967999';
+        
+        // Show auth screen and hide welcome screen
+        function showAuth(formType) {
+            document.getElementById('welcomeScreen').style.display = 'none';
+            document.getElementById('authScreen').style.display = 'block';
+            document.getElementById('regNumberError').style.display = 'none';
+            document.getElementById('loginError').style.display = 'none';
+            
+            if (formType === 'register') {
+                document.getElementById('registerForm').style.display = 'block';
+                document.getElementById('loginForm').style.display = 'none';
+            } else {
+                document.getElementById('registerForm').style.display = 'none';
+                document.getElementById('loginForm').style.display = 'block';
+            }
+        }
+        
+        // Register function
+        function register() {
+            const name = document.getElementById('regName').value.trim();
+            const number = document.getElementById('regNumber').value.trim();
+            const password = document.getElementById('regPassword').value.trim();
+            
+            if (!name || !number || !password) {
+                alert('Please fill in all fields!');
+                return;
+            }
+            
+            if (password.length < 6) {
+                alert('Password must be at least 6 characters!');
+                return;
+            }
+            
+            // Check if number already exists
+            const userExists = users.some(user => user.number === number);
+            if (userExists) {
+                document.getElementById('regNumberError').style.display = 'block';
+                return;
+            }
+            
+            // Create new user
+            const newUser = {
+                name,
+                number,
+                password,
+                balance: 0,
+                completedTasks: 0,
+                totalEarnings: 0
+            };
+            
+            users.push(newUser);
+            localStorage.setItem('users', JSON.stringify(users));
+            
+            currentUser = newUser;
+            showDashboard();
+        }
+        
+        // Login function
+        function login() {
+            const number = document.getElementById('loginNumber').value.trim();
+            const password = document.getElementById('loginPassword').value.trim();
+            
+            const user = users.find(u => u.number === number && u.password === password);
+            
+            if (user) {
+                currentUser = user;
+                showDashboard();
+            } else {
+                document.getElementById('loginError').style.display = 'block';
+            }
+        }
+        
+        // Show dashboard
+        function showDashboard() {
+            document.getElementById('authScreen').style.display = 'none';
+            document.getElementById('dashboard').style.display = 'block';
+            document.getElementById('taskScreen').style.display = 'none';
+            document.getElementById('withdrawScreen').style.display = 'none';
+            
+            document.getElementById('welcomeUser').innerHTML = `Welcome, ${currentUser.name}! <span class="emoji">👋</span>`;
+            document.getElementById('userBalance').textContent = currentUser.balance;
+            document.getElementById('completedTasks').textContent = currentUser.completedTasks;
+            document.getElementById('totalEarnings').textContent = currentUser.totalEarnings;
+        }
+        
+        // Show task screen
+        function showTaskScreen() {
+            document.getElementById('dashboard').style.display = 'none';
+            document.getElementById('taskScreen').style.display = 'block';
+            document.getElementById('taskSuccess').style.display = 'none';
+            document.getElementById('withdrawBalance').textContent = currentUser.balance;
+        }
+        
+        // Show withdraw screen
+        function showWithdrawScreen() {
+            document.getElementById('dashboard').style.display = 'none';
+            document.getElementById('withdrawScreen').style.display = 'block';
+            document.getElementById('withdrawError').style.display = 'none';
+            document.getElementById('withdrawSuccess').style.display = 'none';
+            document.getElementById('withdrawLoading').style.display = 'none';
+            document.getElementById('withdrawBalance').textContent = currentUser.balance;
+        }
+        
+        // Back to dashboard
+        function backToDashboard() {
+            updateUserData();
+            showDashboard();
+        }
+        
+        // Submit task
+        function submitTask() {
+            const screenshot = document.getElementById('screenshot').value;
+            
+            if (!screenshot) {
+                alert('Please upload screenshot proof!');
+                return;
+            }
+            
+            // Add money to balance
+            currentUser.balance += 20;
+            currentUser.completedTasks += 1;
+            currentUser.totalEarnings += 20;
+            
+            document.getElementById('taskSuccess').style.display = 'block';
+            updateUserData();
+            
+            // Reset form
+            document.getElementById('screenshot').value = '';
+            
+            // Update balance display
+            document.getElementById('userBalance').textContent = currentUser.balance;
+            document.getElementById('completedTasks').textContent = currentUser.completedTasks;
+            document.getElementById('totalEarnings').textContent = currentUser.totalEarnings;
+        }
+        
+        // Withdraw money
+        function withdrawMoney() {
+            const upiId = document.getElementById('upiId').value.trim();
+            const amount = parseInt(document.getElementById('withdrawAmount').value);
+            
+            if (!upiId) {
+                alert('Please enter your UPI ID!');
+                return;
+            }
+            
+            if (amount < 30) {
+                document.getElementById('withdrawError').style.display = 'block';
+                return;
+            }
+            
+            if (amount > currentUser.balance) {
+                alert('Insufficient balance!');
+                return;
+            }
+            
+            // Show loading spinner
+            document.getElementById('withdrawLoading').style.display = 'block';
+            document.getElementById('withdrawError').style.display = 'none';
+            document.getElementById('withdrawSuccess').style.display = 'none';
+            
+            // Prepare withdrawal message for Telegram
+            const message = `📌 *New Withdrawal Request* 📌\n\n` +
+                           `👤 *User:* ${currentUser.name}\n` +
+                           `📱 *Mobile:* ${currentUser.number}\n` +
+                           `💳 *UPI ID:* ${upiId}\n` +
+                           `💰 *Amount:* ₹${amount}\n` +
+                           `🏦 *Current Balance:* ₹${currentUser.balance}`;
+            
+            // Send to Telegram bot
+            sendToTelegram(message).then(success => {
+                document.getElementById('withdrawLoading').style.display = 'none';
+                
+                if (success) {
+                    // Process withdrawal
+                    currentUser.balance -= amount;
+                    updateUserData();
+                    
+                    document.getElementById('withdrawSuccess').style.display = 'block';
+                    
+                    // Reset form
+                    document.getElementById('upiId').value = '';
+                    document.getElementById('withdrawAmount').value = '';
+                    
+                    // Update balance display
+                    document.getElementById('userBalance').textContent = currentUser.balance;
+                    document.getElementById('withdrawBalance').textContent = currentUser.balance;
+                } else {
+                    alert('Failed to send withdrawal request. Please try again.');
+                }
+            });
+        }
+        
+        // Send message to Telegram bot
+        async function sendToTelegram(message) {
+            const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
+            
+            try {
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        chat_id: CHAT_ID,
+                        text: message,
+                        parse_mode: 'Markdown'
+                    })
+                });
+                
+                const data = await response.json();
+                return data.ok;
+            } catch (error) {
+                console.error('Error sending to Telegram:', error);
+                return false;
+            }
+        }
+        
+        // Update user data in storage
+        function updateUserData() {
+            const userIndex = users.findIndex(u => u.number === currentUser.number);
+            if (userIndex !== -1) {
+                users[userIndex] = currentUser;
+                localStorage.setItem('users', JSON.stringify(users));
+            }
+        }
+    </script>
+</body>
+</html>
